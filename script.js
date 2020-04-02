@@ -91,6 +91,7 @@ let todoList = {
   //-------------------View------------------------//
   let view ={
     displayTodos: function(){
+       localStorage.setItem('todo-list', JSON.stringify(todoList.todos)|| []);
     let todosUl = document.querySelector('ul');
     todosUl.innerHTML = '';
       todoList.todos.forEach(function(todo,position,checkbox){
@@ -119,11 +120,9 @@ let todoList = {
         todoLi.appendChild(todoP);
         todoP.textContent = todoTextWithCompletion;
         todoLi.appendChild(view.createEditButton());
-      
         todoLi.appendChild(view.createDeleteButton());
-        // todoLi.appendChild(view.createEditButton());
         todosUl.appendChild(todoLi);
-      });
+      })
     },
     changeTodo: function(position){
       //selecting elements of the node list
@@ -209,5 +208,20 @@ let todoList = {
       });
     }
   };
-  view.setUpEventListeners();
   
+window.onload = function(){
+  view.setUpEventListeners();
+  let previousTodos = getPreviousTodos();
+  if(previousTodos){
+  previousTodos.forEach(previousTodo => todoList.todos.push(previousTodo))
+  view.displayTodos();
+  }
+  function getPreviousTodos(){
+  let previousTodoItems = localStorage.getItem("todo-list");
+  if(previousTodoItems){
+    let previousTodoItem = JSON.parse(previousTodoItems)
+    return previousTodoItem
+  }
+}
+}
+ 
