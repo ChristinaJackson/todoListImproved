@@ -209,7 +209,8 @@ let todoList = {
     }
   };
   
-window.onload = function(){
+
+window.addEventListener('load', function (){
   view.setUpEventListeners();
   let previousTodos = getPreviousTodos();
   if(previousTodos){
@@ -223,5 +224,5 @@ window.onload = function(){
     return previousTodoItem
   }
 }
-}
+});
  
